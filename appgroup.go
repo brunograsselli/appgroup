@@ -9,7 +9,7 @@ import (
 var defaultShutdownTimeout = 30 * time.Second
 
 type Group interface {
-	Wait()
+	Wait(opts ...WaitOption)
 	Go(func())
 }
 
