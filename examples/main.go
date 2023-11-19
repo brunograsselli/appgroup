@@ -19,7 +19,8 @@ func main() {
 	g, ctx := appgroup.WithContext(ctx)
 
 	g.Go(func() {
-		ctx, _ := context.WithTimeout(ctx, 60*time.Second)
+		ctx, cancel := context.WithTimeout(ctx, 60*time.Second)
+		defer cancel()
 
 		<-ctx.Done() // simulating a long running listener that takes context into account
 
@@ -27,7 +28,8 @@ func main() {
 	})
 
 	g.Go(func() {
-		ctx, _ := context.WithTimeout(ctx, 5*time.Second)
+		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+		defer cancel()
 
 		<-ctx.Done() // simulating a long running listener that takes context into account
 
